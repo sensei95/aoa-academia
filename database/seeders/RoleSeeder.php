@@ -16,10 +16,10 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->createAdminRole();
+        $this->createSupeAdminRole();
 
         collect(UserRole::cases())->each(function (UserRole $userRole) {
-            if ($userRole->value !== UserRole::ADMIN->value) {
+            if ($userRole->value !== UserRole::SUPER_ADMIN->value) {
                 $this->createRole($userRole);
             }
         });
@@ -35,13 +35,13 @@ class RoleSeeder extends Seeder
         }
     }
 
-    public function createAdminRole(): void
+    public function createSupeAdminRole(): void
     {
         $permissions = Permission::query()
             ->where('name', 'like', 'agent.%')
             ->orWhere('name', 'like', 'applicant.%')
             ->pluck('id');
 
-        $this->createRole(roleName: UserRole::ADMIN, permissions: $permissions);
+        $this->createRole(roleName: UserRole::SUPER_ADMIN, permissions: $permissions);
     }
 }

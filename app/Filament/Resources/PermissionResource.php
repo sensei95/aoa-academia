@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Permission\PermissionAction;
+use App\Enums\Permission\PermissionResource as PermissionPermissionEnum;
 use App\Filament\Resources\PermissionResource\Pages;
 use App\Filament\Resources\PermissionResource\RelationManagers;
 use App\Models\Permission;
@@ -19,13 +21,19 @@ class PermissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Settings';
+    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('resource')
+                ->options([
+                    'applicant' => 'Applicant',
+                    'agent' => 'Agent'
+                ])
+                    ->required(),
+                Forms\Components\TextInput::make('action')
             ]);
     }
 

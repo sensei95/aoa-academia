@@ -15,15 +15,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->createAdminUser();
+        $this->createSuperAdminUser();
     }
 
-    public function createAdminUser(): void
+    public function createSuperAdminUser(): void
     {
         User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@admin.com',
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
+            'email' => 'super_admin@dev.com',
             'password' => bcrypt('password'),
-        ])->roles()->sync(Role::where('name', UserRole::ADMIN->value)->first());
+            'email_verified_at' => now()
+        ])->roles()->sync(Role::where('name', UserRole::SUPER_ADMIN->value)->first());
     }
 }

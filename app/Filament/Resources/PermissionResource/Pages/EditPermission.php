@@ -10,6 +10,14 @@ class EditPermission extends EditRecord
 {
     protected static string $resource = PermissionResource::class;
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $parts = explode('.',$this->record->name);
+        $data['action'] = $parts[1];
+        $data['resource'] = $parts[0];
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

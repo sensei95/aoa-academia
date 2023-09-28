@@ -14,4 +14,15 @@ trait HasValues
 
         return $values;
     }
+
+    public static function toArray()
+    {
+        $values = [];
+
+        foreach (self::cases() as $item) {
+            $values[""] = $item->value;
+        }
+
+        return $values;
+    }
 }
